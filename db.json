@@ -1,0 +1,9 @@
+{
+  "costs": [
+    {"_id": 1, "reason": "Because", "cost": 250},
+    {"_id": 2, "reason": "Need", "cost": 541},
+    {"_id": 3, "reason": "Need", "cost": 243550},
+    {"_id": 4, "reason": "Because", "cost": 254510},
+    {"_id": 5, "reason": "Because", "cost": 25450}
+  ]
+}

@@ -1,0 +1,77 @@
+body {
+  font-family: 'Playfair Display', serif;
+}
+
+h1 {
+  margin: 0;
+  height: 10%;
+}
+
+#__next {
+  height: 100%;
+  width: 100%;
+}
+
+.home_container {
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.add_input_content {
+  height: 90%;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.add_content {
+  height: 30%;
+  width: 70%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.task_content {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cost {
+  width: 100%;
+  height: 15%;
+  background-image: linear-gradient(to right top, #c77db0, #a29be8, #45bcff, #00d8f9, #12ebcc);
+  margin-bottom: 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info_about_task {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.button {
+  height: 100%;
+  width: 50%;
+}
+
+.button_delete,
+.button_edit {
+  height: 100%;
+  width: 50%;
+}
+
+h3, h4 {
+  margin: 10px;
+}
