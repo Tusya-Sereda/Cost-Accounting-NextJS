@@ -1,5 +1,5 @@
 body {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
 }
 
 h1 {
@@ -12,7 +12,7 @@ h1 {
   width: 100%;
 }
 
-.home_container {
+.mainHomeContainer {
   width: 80%;
   height: 100%;
   margin: 0 auto;
@@ -28,11 +28,27 @@ h1 {
 }
 
 .add_content {
-  height: 30%;
+  height: 40%;
   width: 70%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+}
+.MuiFormControl-root.MuiTextField-root.inputWhere,
+.MuiFormControl-root.MuiTextField-root.inputHowMuch {
+  margin-top: 3%;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedSecondary {
+  width: 30%;
+  margin: 0 auto;
+  margin-top: 3%;
 }
 
 .task_content {
@@ -45,7 +61,14 @@ h1 {
 .cost {
   width: 100%;
   height: 15%;
-  background-image: linear-gradient(to right top, #c77db0, #a29be8, #45bcff, #00d8f9, #12ebcc);
+  background-image: linear-gradient(
+    to right top,
+    #c77db0,
+    #a29be8,
+    #45bcff,
+    #00d8f9,
+    #12ebcc
+  );
   margin-bottom: 10px;
   border-radius: 20px;
   display: flex;
@@ -61,17 +84,30 @@ h1 {
   justify-content: center;
 }
 
+.input_info_task {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+}
+
+.cost_value {
+  height: 50%;
+  margin: 0;
+}
+
+p{
+  margin: 0;
+}
+
 .button {
   height: 100%;
-  width: 50%;
+  width: 40%;
 }
 
 .button_delete,
 .button_edit {
   height: 100%;
   width: 50%;
-}
-
-h3, h4 {
-  margin: 10px;
 }

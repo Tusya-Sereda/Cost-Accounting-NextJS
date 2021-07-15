@@ -4,7 +4,7 @@ const CostContext = createContext();
 
 const CostProvider = ({ children }) => {
   const [allCosts, setAllCost] = useState([]);
-  const [sum, setSum] = useState("");
+  const [sum, setSum] = useState(0);
 
   return (
     <CostContext.Provider

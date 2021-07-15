@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import Link from "next/link";
 import { CostContext } from "../context/Context";
 import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -8,17 +9,17 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { TextField } from "@material-ui/core";
 
 export default function TaskContent() {
-  const { allCosts, setAllCost } = useContext(CostContext);
+  const { allCosts, setAllCost, sum, setSum } = useContext(CostContext);
   const [valueWhere, setValueWhere] = useState(allCosts.reason);
   const [valueHowMuch, setValueHowMuch] = useState(allCosts.cost);
   const [editIndex, setEditIndex] = useState(-1);
-  const [flagForReason, setFlagReason] = useState(-1);
-  const [flagForCost, setFlagCost] = useState(-1);
 
   const deleteHandler = (index) => {
     const array = [...allCosts];
+    const resultSum = setSum(sum - array[index].cost);
     array.splice(index, 1);
     setAllCost(array);
+    localStorage.setItem("costs", JSON.stringify(array));
   };
 
   const editHandler = (index) => {
@@ -31,6 +32,7 @@ export default function TaskContent() {
       array[index].reason = valueWhere;
       array[index].cost = valueHowMuch;
       setAllCost(array);
+      localStorage.setItem("costs", JSON.stringify(array));
       setEditIndex(-1);
     } else {
       setEditIndex(-1);
@@ -47,22 +49,32 @@ export default function TaskContent() {
 
   return (
     <div className="task_content">
+      <div>
+        <p>{`Итого: ${sum}`}</p>
+      </div>
       {allCosts.map((value, index) => (
         <div key={`key-${index}`} id={`${index}-task`} className="cost">
           {editIndex !== index ? (
-            <div
-              className="info_about_task"
-              onDoubleClick={() => doubleClickHandler(index)}
-            >
-              <h3>{value.reason}</h3>
-              <h4>{value.cost}</h4>
-            </div>
+            <Link href={`/node/${value.id}`}>
+              <div
+                className="info_about_task"
+                onDoubleClick={() => doubleClickHandler(index)}
+              >
+                <div className="cost_value">
+                  <p>{value.reason}</p>
+                </div>
+                <div className="cost_value">
+                  <p>{value.cost}</p>
+                </div>
+              </div>
+            </Link>
           ) : (
             <div className="input_info_task">
               <TextField
                 className="input_reason"
                 variant="outlined"
                 value={valueWhere}
+                type="text"
                 label="Куда было потрачено:"
                 onChange={(event) => setValueWhere(event.target.value)}
               />
@@ -70,6 +82,7 @@ export default function TaskContent() {
                 className="input_how_much"
                 variant="outlined"
                 value={valueHowMuch}
+                type="number"
                 label="Сколько было потрачено:"
                 onChange={(event) => setValueHowMuch(event.target.value)}
               />

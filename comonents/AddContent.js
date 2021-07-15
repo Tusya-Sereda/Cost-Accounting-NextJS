@@ -1,95 +1,84 @@
-import React, {useState, useEffect, useContext } from 'react';
-import { CostContext } from '../context/Context';
-import { TextField, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import TaskContent from './TaskContent';
+import React, { useState, useEffect, useContext } from "react";
+import { CostContext } from "../context/Context";
+import { TextField, Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import TaskContent from "./TaskContent";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& > *': {
+    "& > *": {
       margin: theme.spacing(1),
     },
   },
 }));
 
-export default function AddContent () {
+export default function AddContent() {
   const classes = useStyles();
-  const {allCosts, setAllCost} = useContext(CostContext);
-  const [inputReason, setReason] = useState('');
-  const [inputCost, setCost] = useState('');
-  const [inputReasonDirty, setReasonDirty] = useState(false);
-  const [inputCostDirty, setCostDirty] = useState(false);
-  const [inputReasonError, setReasonError] = useState('Поле не может быть пустым');
-  const [inputCostError, setCostError] = useState('Поле не может быть пустым');
+  const { allCosts, setAllCost, sum, setSum} = useContext(CostContext);
+  const [inputReason, setReason] = useState("");
+  const [inputCost, setCost] = useState("");
 
-  useEffect( () => {
-    async function load () {
-      const response = await fetch('http://localhost:4200/costs');
-      const json = await response.json();
-      setAllCost(json);
+  useEffect(() => {
+    const array = JSON.parse(localStorage.getItem('costs', allCosts) || []);
+    if (array) {
+      setAllCost(array);
+      let resultSum = 0;
+      array.map( value => {
+        resultSum += + value.cost;
+      })
+      setSum(resultSum);
     }
-    load();
-  }, [])
-
-  const blurHandler = (event) => {
-    switch(event.target.value) {
-      case 'inputReason':
-        setReasonDirty(true);
-        break;
-      case 'inputCost':
-        setCostDirty(true);
-        break;
-    }
-  }
+    // async function load() {
+    //   const response = await fetch("http://localhost:4200/costs");
+    //   const json = await response.json();
+    //   setAllCost(json);
+    // }
+    // load();
+  }, []);
 
   const onCLickButton = () => {
     const array = [...allCosts];
+    const arrLength = array.length;
     array.push({
+      id: arrLength,
       reason: inputReason,
-      cost: inputCost
-    });  
+      cost: +inputCost,
+    });
     setAllCost(array);
-    setReason('');
-    setCost('');
-  }
+    setSum( sum + +inputCost );
+    setReason("");
+    setCost("");
+    localStorage.setItem("costs", JSON.stringify(array));
+  };
 
   return (
     <div className="add_input_content">
-      <div className='add_content'>
-        {(inputReasonDirty && inputReasonError) && <div style={{color: 'red'}}>{inputReasonError} </div>}
-        <TextField 
-          className= { inputReason ? "inputWhereValid" : "inputWhereInvalid" } 
-          variant="outlined" 
-          value={inputReason} 
-          onBlur={() => blurHandler(event)}
+      <div className="add_content">
+        <TextField
+          className="inputWhere"
+          variant="outlined"
+          value={inputReason}
+          type="text"
           onChange={(event) => setReason(event.target.value)}
           label="Куда было потрачено:"
         />
-        {(inputCostDirty && inputCostError) && <div style={{color: 'red'}}>{inputCostError}</div>}
-        <TextField 
-          className="inputHowMuch" 
-          variant="outlined" 
-          value={inputCost} 
+        <TextField
+          className="inputHowMuch"
+          variant="outlined"
+          value={inputCost}
+          type="number"
           label="Сколько было потрачено:"
-          onBlur={() => blurHandler(event)}
           onChange={(event) => setCost(event.target.value)}
         />
-        <Button 
-        variant="contained" 
-        color="secondary" 
-        onClick={() => onCLickButton()
-        }>Add</Button>
-        </div>
-          <TaskContent/>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => onCLickButton()}
+        >
+          Add
+        </Button>
+      </div>
+      <TaskContent />
     </div>
   );
 }
-
-// AddContent.getInitialProps = async () => {
-//   const response = await fetch('http://localhost:4200/costs');
-//   const costs = await response.json();
-//   console.log(costs);
-//   return {
-//     costs // возвращаем объект по ключу 
-//   }
-// }
