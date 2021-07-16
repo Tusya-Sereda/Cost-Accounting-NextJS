@@ -6,18 +6,22 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import useKeyPress from "../../hooks/UseKeyPress";
 
 export default function NodeId() {
-  const array = JSON.parse(localStorage.getItem("costs") || []);
+  const [array, setArray] = useState([]);
   const [onePurchase, setOnePurchase] = useState([]);
   const [deleteIndex, setDeleteIndex] = useState(-1);
   const [editIndex, setEditIndex] = useState(-1);
   const [changeWhere, setChangeWhere] = useState(array.reason);
   const [changeHowMany, setChangeHowMany] = useState(array.cost);
+  const [valueKey, setValueKey] = useState(false);
+  const someText = useKeyPress('s', 'a');
   const router = useRouter();
   const { id } = router.query;
 
   useEffect(() => {
+    setArray(JSON.parse(localStorage.getItem("costs") || []));
     if (array.length && id) {
       array.forEach((element, index) => {
         if (element.id === Number(router.query.id)) {
@@ -28,11 +32,19 @@ export default function NodeId() {
       });
     }
   }, []);
+  
+  useEffect(()=>{
+    if (someText) {
+      console.log ('good');
+      setEditIndex(deleteIndex);
+    }
+  },[someText])
 
   const deleteOnePurchase = (index) => {
     array.splice(index, 1);
     localStorage.setItem("costs", JSON.stringify(array));
     setDeleteIndex(-1);
+    localStorage.clear();
   };
 
   const editOnePurchase = (index) => {
@@ -48,6 +60,7 @@ export default function NodeId() {
     array[index].cost = changeHowMany;
     localStorage.setItem("costs", JSON.stringify(array));
     setEditIndex(-1);
+    localStorage.clear();
   };
 
   return (
@@ -96,7 +109,7 @@ export default function NodeId() {
                 className="button_edit_one"
                 onClick={() => editOnePurchase(editIndex)}
               >
-                <EditIcon fontSize="large" className="editOnePurchase" />
+                <EditIcon fontSize="large" className="editOnePurchase"/>
               </IconButton>
             </div>
           ) : (

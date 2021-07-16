@@ -3,6 +3,7 @@ import { CostContext } from "../context/Context";
 import { TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import TaskContent from "./TaskContent";
+import useKeyPress from "../hooks/UseKeyPress";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +20,7 @@ export default function AddContent() {
   const [inputCost, setCost] = useState("");
 
   useEffect(() => {
-    const array = JSON.parse(localStorage.getItem('costs', allCosts) || []);
+    const array = JSON.parse(localStorage.getItem('costs')) || [];
     if (array) {
       setAllCost(array);
       let resultSum = 0;

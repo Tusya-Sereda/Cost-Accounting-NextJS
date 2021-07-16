@@ -42,11 +42,7 @@ export default function TaskContent() {
   const backHandler = () => {
     setEditIndex(-1);
   };
-
-  const doubleClickHandler = (index) => {
-    setEditIndex(index);
-  };
-
+  
   return (
     <div className="task_content">
       <div>
@@ -58,7 +54,6 @@ export default function TaskContent() {
             <Link href={`/node/${value.id}`}>
               <div
                 className="info_about_task"
-                onDoubleClick={() => doubleClickHandler(index)}
               >
                 <div className="cost_value">
                   <p>{value.reason}</p>
