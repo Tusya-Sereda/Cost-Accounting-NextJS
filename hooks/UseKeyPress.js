@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const useKeyPress = (...valueKey) => {
   const keyPressed = [...valueKey];
@@ -8,16 +8,25 @@ const useKeyPress = (...valueKey) => {
   const [keys, setKeys] = useState([]);
 
   const onKeyDown = ({ key }) => {
+    // if (keyPressed.includes(key)) {
+    //   console.log('yep');
+    // }
     const array = [...keys];
     array.push(key);
     setKeys(array);
-    if (valueKey === key) {
+    console.log(array);
+    if (array.includes(keyPressed)) {
       setKeyPress(true);
+      console.log('зашли');
     }
+    // if (valueKey === key) {
+    //   setKeyPress(true);
+    // }
   };
+  console.log('keys', keys);
 
   const onKeyUp = ({ key }) => {
-
+    const array = [...keys];
     if (valueKey === key) {
       setKeyPress(false);
     }

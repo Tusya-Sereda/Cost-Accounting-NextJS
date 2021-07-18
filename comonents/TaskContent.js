@@ -16,7 +16,7 @@ export default function TaskContent() {
 
   const deleteHandler = (index) => {
     const array = [...allCosts];
-    const resultSum = setSum(sum - array[index].cost);
+    setSum(sum - array[index].cost);
     array.splice(index, 1);
     setAllCost(array);
     localStorage.setItem("costs", JSON.stringify(array));
@@ -37,10 +37,14 @@ export default function TaskContent() {
     } else {
       setEditIndex(-1);
     }
+    setValueHowMuch('');
+    setValueWhere('');
   };
 
   const backHandler = () => {
     setEditIndex(-1);
+    setValueHowMuch('');
+    setValueWhere('');
   };
   
   return (
@@ -56,7 +60,7 @@ export default function TaskContent() {
                 className="info_about_task"
               >
                 <div className="cost_value">
-                  <p>{value.reason}</p>
+                  <p>Магазин: {value.reason}</p>
                 </div>
                 <div className="cost_value">
                   <p>{value.cost}</p>

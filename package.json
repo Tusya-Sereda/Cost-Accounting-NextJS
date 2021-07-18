@@ -23,5 +23,17 @@
     "concurrently": "^6.2.0",
     "eslint": "7.30.0",
     "eslint-config-next": "11.0.1"
-  }
+  },
+  "description": "New project on NextJS",
+  "main": "next.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tusya-Sereda/Cost-Accounting-NextJS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tusya-Sereda/Cost-Accounting-NextJS/issues"
+  },
+  "homepage": "https://github.com/Tusya-Sereda/Cost-Accounting-NextJS#readme"
 }

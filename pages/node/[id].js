@@ -9,7 +9,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import useKeyPress from "../../hooks/UseKeyPress";
 
 export default function NodeId() {
-  const [array, setArray] = useState([]);
+  const [array, setArray] = useState(JSON.parse(localStorage.getItem("costs") || []));
   const [onePurchase, setOnePurchase] = useState([]);
   const [deleteIndex, setDeleteIndex] = useState(-1);
   const [editIndex, setEditIndex] = useState(-1);
@@ -21,7 +21,7 @@ export default function NodeId() {
   const { id } = router.query;
 
   useEffect(() => {
-    setArray(JSON.parse(localStorage.getItem("costs") || []));
+    // setArray(JSON.parse(localStorage.getItem("costs") || []));
     if (array.length && id) {
       array.forEach((element, index) => {
         if (element.id === Number(router.query.id)) {
