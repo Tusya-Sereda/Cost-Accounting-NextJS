@@ -2,26 +2,34 @@ import React, { useState, useEffect } from "react";
 
 const useKeyPress = (...valueKey) => {
   const keyPressed = [...valueKey];
-  console.log(keyPressed);
 
   const [keyPress, setKeyPress] = useState(false);
   const [keys, setKeys] = useState([]);
-
+ 
   const onKeyDown = ({ key }) => {
-    const array = [...keys];
-    array.push(key);
-    setKeys(array);
-    if (valueKey === key) {
-      setKeyPress(true);
-    }
+    setKeys( array => [...new Set([...array, key])]);
+    // const newArr = [...array, key]
+    // const sets = new Set(newArr)
+    // const uniqArr = [...sets]
+    // return uniqArr;
   };
+
+  useEffect( () => {
+    const result = keyPressed.every(elem => keys.includes(elem));
+    setKeyPress(result);
+  }, [keyPressed, keys]);
 
   const onKeyUp = ({ key }) => {
-
-    if (valueKey === key) {
-      setKeyPress(false);
-    }
+    setKeys((prevKeys) => {
+      let count = prevKeys.indexOf(key);
+      prevKeys.splice(count, 1);
+      return prevKeys;
+    });
+    // setKeys([]);
+    setKeyPress(false);
   };
+
+  console.log('keys', keys);
 
   useEffect(() => {
     window.addEventListener("keydown", onKeyDown);
@@ -30,7 +38,7 @@ const useKeyPress = (...valueKey) => {
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
     };
-  }, [keyPress]);
+  }, []);
 
   return keyPress;
 };

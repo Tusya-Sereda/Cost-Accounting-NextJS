@@ -44,17 +44,15 @@ export default function TaskContent() {
   };
   
   return (
-    <div className="task_content">
-      <div>
-        <p>{`Итого: ${sum}`}</p>
-      </div>
-      {allCosts.map((value, index) => (
-        <div key={`key-${index}`} id={`${index}-task`} className="cost">
-          {editIndex !== index ? (
-            <Link href={`/node/${value.id}`}>
-              <div
-                className="info_about_task"
-              >
+  <div className="task_content">
+    <div>
+      <p>{`Итого: ${sum}`}</p>
+    </div>
+    {allCosts.map((value, index) => (
+    <div key={`key-${index}`} id={`${index}-task`} className="cost">
+      {editIndex !== index ? (
+      <Link href={`/node/${value.id}`}>
+        <div className="info_about_task">
                 <div className="cost_value">
                   <p>{value.reason}</p>
                 </div>
