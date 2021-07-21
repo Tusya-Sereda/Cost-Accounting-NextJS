@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { CostContext } from "../../context/Context";
 import useKeyPress from "../../hooks/UseKeyPress";
 import useOutsideClick from "../../hooks/useOutsideClick";
+import useWindowSize from "../../hooks/useWindowSize";
 import { IconButton, TextField, Button } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -12,12 +14,13 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 export default function NodeId() {
   const router = useRouter();
   const { id } = router.query;
+  const { allCosts, setAllCost } = useContext(CostContext);
   const [array, setArray] = useState([]);
   const [onePurchase, setOnePurchase] = useState({});
   const [deleteIndex, setDeleteIndex] = useState(-1);
   const [editIndex, setEditIndex] = useState(-1);
-  const [changeWhere, setChangeWhere] = useState(array.reason);
-  const [changeHowMany, setChangeHowMany] = useState(array.cost);
+  const [changeWhere, setChangeWhere] = useState(onePurchase.reason);
+  const [changeHowMany, setChangeHowMany] = useState(onePurchase.cost);
   const someText = useKeyPress('s', 'a');
 
   const ref = useRef();
@@ -25,39 +28,39 @@ export default function NodeId() {
   useOutsideClick(ref, () => setModalOpen(false));
   useOutsideClick(ref, () => setEditIndex(-1));
   
+  const sizeWindow = useWindowSize();
+
+  console.log('width:', sizeWindow.width, 'height:', sizeWindow.height);
+
   const getArray = () => {
     const result  = JSON.parse(localStorage.getItem("costs")) || [];
     setArray(result);
-}
+  }
 
 useEffect(() => {
-  if (array.length && id ) {
-    array.find( (element) => {
-      if (String(element.id) === id) {
-      } 
-    })
-  }
-    
-      // array.forEach((element, index) => {
-      //   if (element.id === Number(router.query.id)) {
-      //     setDeleteIndex(index);
-      //     console.log("element",element);
-      //     setOnePurchase(element);
-      //     // localStorage.setItem("onePurchase", JSON.stringify(element));
-      //   }
-      // }); 
-      // console.log("id",router.query.id);
-      // const res = array.find((el)=> {
-      //   console.log("el.id",el.id);
-      //   return`${el.id}` === `${id}`}) || {}
-      
-      // console.log(res);
-      // setOnePurchase(res);
-  }, [id]);
+  getArray()
+}, [])
 
-  useEffect(()=>{
-    getArray()
-  },[])
+useEffect(() => {
+  console.log('allCosts', allCosts);
+  const onePurchase = [...allCosts];
+  onePurchase.find( (element, index) => {
+    if (String(element.id) === id) {
+      setDeleteIndex(index);
+      setOnePurchase(onePurchase);
+      localStorage.setItem("onePurchase", JSON.stringify(element));
+    }
+  })
+  // if (array.length && id ) {
+  //   array.find( (element, index) => {
+  //     if (String(element.id) === id) {
+  //       setDeleteIndex(index);
+  //       setOnePurchase(element);
+  //       localStorage.setItem("onePurchase", JSON.stringify(element));
+  //     } 
+  //   })
+  // }
+}, [id]);
   
   useEffect(() => {
     if (someText) {
@@ -67,6 +70,7 @@ useEffect(() => {
   }, [someText])
 
   const deleteOnePurchase = (index) => {
+    const array = [...allCosts];
     array.splice(index, 1);
     localStorage.setItem("costs", JSON.stringify(array));
     setDeleteIndex(-1);
@@ -82,18 +86,17 @@ useEffect(() => {
   };
 
   const checkHandler = (index) => {
-    array[index].reason = changeWhere;
+    const array = [...allCosts];
+    array[index].place = changeWhere;
     array[index].cost = changeHowMany;
     localStorage.setItem("costs", JSON.stringify(array));
     setEditIndex(-1);
     localStorage.removeItem("onePurchase");
   };
 
-
-  console.log("onePurchase", onePurchase);
-
   return (
     <div className="info_about_one_cost">
+      {sizeWindow.width}px / {sizeWindow.height}px
       <div>
         { isModalOpen ? (
           <div ref={ref}>
@@ -107,7 +110,7 @@ useEffect(() => {
         {editIndex === -1 ? (
           <div className="text_purchase" onClick={ () => setEditIndex(deleteIndex)}>
             <p> At ID number: {id} </p>
-            <h1 className="title_where">{onePurchase.reason}</h1>
+            <h1 className="title_where">{onePurchase.place}</h1>
             <p className="title_how_many">{onePurchase.cost}</p>
           </div>
         ) : (

@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
 export default function AddContent() {
   const classes = useStyles();
   const { allCosts, setAllCost, sum, setSum} = useContext(CostContext);
-  const [inputReason, setReason] = useState("");
-  const [inputCost, setCost] = useState("");
+  const [valuePlace, setPlace] = useState("");
+  const [valueCost, setCost] = useState("");
 
   useEffect(() => {
     const array = JSON.parse(localStorage.getItem('costs')) || [];
@@ -42,12 +42,12 @@ export default function AddContent() {
     const arrLength = array.length;
     array.push({
       id: arrLength,
-      reason: inputReason,
-      cost: +inputCost,
+      place: valuePlace,
+      cost: +valueCost,
     });
     setAllCost(array);
-    setSum( sum + +inputCost );
-    setReason("");
+    setSum( sum + +valueCost );
+    setPlace("");
     setCost("");
     localStorage.setItem("costs", JSON.stringify(array));
   };
@@ -58,15 +58,15 @@ export default function AddContent() {
         <TextField
           className="inputWhere"
           variant="outlined"
-          value={inputReason}
+          value={valuePlace}
           type="text"
-          onChange={(event) => setReason(event.target.value)}
+          onChange={(event) => setPlace(event.target.value)}
           label="Куда было потрачено:"
         />
         <TextField
           className="inputHowMuch"
           variant="outlined"
-          value={inputCost}
+          value={valueCost}
           type="number"
           label="Сколько было потрачено:"
           onChange={(event) => setCost(event.target.value)}

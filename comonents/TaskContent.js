@@ -1,22 +1,22 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import Link from "next/link";
 import { CostContext } from "../context/Context";
 import { IconButton } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { TextField } from "@material-ui/core";
 
 export default function TaskContent() {
   const { allCosts, setAllCost, sum, setSum } = useContext(CostContext);
-  const [valueWhere, setValueWhere] = useState(allCosts.reason);
+  const [valueWhere, setValueWhere] = useState(allCosts.place);
   const [valueHowMuch, setValueHowMuch] = useState(allCosts.cost);
   const [editIndex, setEditIndex] = useState(-1);
 
   const deleteHandler = (index) => {
     const array = [...allCosts];
-    const resultSum = setSum(sum - array[index].cost);
+    setSum(sum - array[index].cost);
     array.splice(index, 1);
     setAllCost(array);
     localStorage.setItem("costs", JSON.stringify(array));
@@ -29,7 +29,7 @@ export default function TaskContent() {
   const checkHandler = (index) => {
     if (valueWhere && valueHowMuch) {
       const array = [...allCosts];
-      array[index].reason = valueWhere;
+      array[index].place = valueWhere;
       array[index].cost = valueHowMuch;
       setAllCost(array);
       localStorage.setItem("costs", JSON.stringify(array));
@@ -54,7 +54,7 @@ export default function TaskContent() {
       <Link href={`/node/${value.id}`}>
         <div className="info_about_task">
                 <div className="cost_value">
-                  <p>{value.reason}</p>
+                  <p>{value.place}</p>
                 </div>
                 <div className="cost_value">
                   <p>{value.cost}</p>
