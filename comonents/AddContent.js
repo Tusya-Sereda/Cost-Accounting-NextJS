@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
+import {useQuery} from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { CostContext } from "../context/Context";
 import { TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -10,11 +12,12 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(1),
     },
-  },
+  }
 }));
 
 export default function AddContent() {
   const classes = useStyles();
+  const [users, setUsers] = useState([]);
   const { allCosts, setAllCost, sum, setSum} = useContext(CostContext);
   const [valuePlace, setPlace] = useState("");
   const [valueCost, setCost] = useState("");

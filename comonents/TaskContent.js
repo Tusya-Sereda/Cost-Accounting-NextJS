@@ -21,7 +21,7 @@ export default function TaskContent() {
     setAllCost(array);
     localStorage.setItem("costs", JSON.stringify(array));
   };
-
+  
   const editHandler = (index) => {
     setEditIndex(index);
   };
@@ -42,7 +42,7 @@ export default function TaskContent() {
   const backHandler = () => {
     setEditIndex(-1);
   };
-  
+
   return (
   <div className="task_content">
     <div>

@@ -12,15 +12,15 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 export default function NodeId() {
+  const { allCosts, setAllCost, sum, setSum } = useContext(CostContext);
   const router = useRouter();
   const { id } = router.query;
-  const { allCosts, setAllCost } = useContext(CostContext);
   const [array, setArray] = useState([]);
   const [onePurchase, setOnePurchase] = useState({});
   const [deleteIndex, setDeleteIndex] = useState(-1);
   const [editIndex, setEditIndex] = useState(-1);
-  const [changeWhere, setChangeWhere] = useState(onePurchase.reason);
-  const [changeHowMany, setChangeHowMany] = useState(onePurchase.cost);
+  const [changeWhere, setChangeWhere] = useState(onePurchase?.place);
+  const [changeHowMuch, setChangeHowMuch] = useState(onePurchase?.cost);
   const someText = useKeyPress('s', 'a');
 
   const ref = useRef();
@@ -39,28 +39,19 @@ export default function NodeId() {
 
 useEffect(() => {
   getArray()
-}, [])
+}, []);
 
 useEffect(() => {
-  console.log('allCosts', allCosts);
-  const onePurchase = [...allCosts];
-  onePurchase.find( (element, index) => {
-    if (String(element.id) === id) {
+  const purchase = [...array];
+  // const oneNote = purchase.find( note => note.id == id);
+  const oneNote = purchase.find( (note, index) => {
+    if (note.id == id) {
       setDeleteIndex(index);
-      setOnePurchase(onePurchase);
-      localStorage.setItem("onePurchase", JSON.stringify(element));
+      return note;
     }
   })
-  // if (array.length && id ) {
-  //   array.find( (element, index) => {
-  //     if (String(element.id) === id) {
-  //       setDeleteIndex(index);
-  //       setOnePurchase(element);
-  //       localStorage.setItem("onePurchase", JSON.stringify(element));
-  //     } 
-  //   })
-  // }
-}, [id]);
+  setOnePurchase(oneNote);
+}, [id, array]);
   
   useEffect(() => {
     if (someText) {
@@ -70,11 +61,10 @@ useEffect(() => {
   }, [someText])
 
   const deleteOnePurchase = (index) => {
-    const array = [...allCosts];
-    array.splice(index, 1);
-    localStorage.setItem("costs", JSON.stringify(array));
+    const delArray = [...array];
+    delArray.splice(index, 1);
+    localStorage.setItem("costs", JSON.stringify(delArray));
     setDeleteIndex(-1);
-    localStorage.removeItem("onePurchase");
   };
 
   const editOnePurchase = (index) => {
@@ -85,13 +75,16 @@ useEffect(() => {
     setEditIndex(-1);
   };
 
+  console.log('array', array);
+  console.log('deleteIndex', deleteIndex);
+
   const checkHandler = (index) => {
-    const array = [...allCosts];
-    array[index].place = changeWhere;
-    array[index].cost = changeHowMany;
-    localStorage.setItem("costs", JSON.stringify(array));
+    const checkArray = [...array];
+    checkArray[index].place = changeWhere;
+    checkArray[index].cost = changeHowMuch;
+    localStorage.setItem("costs", JSON.stringify(checkArray));
+    setAllCost(checkArray);
     setEditIndex(-1);
-    localStorage.removeItem("onePurchase");
   };
 
   return (
@@ -110,8 +103,8 @@ useEffect(() => {
         {editIndex === -1 ? (
           <div className="text_purchase" onClick={ () => setEditIndex(deleteIndex)}>
             <p> At ID number: {id} </p>
-            <h1 className="title_where">{onePurchase.place}</h1>
-            <p className="title_how_many">{onePurchase.cost}</p>
+            <h1 className="title_where">{onePurchase?.place}</h1>
+            <p className="title_how_many">{onePurchase?.cost}</p>
           </div>
         ) : (
           <div className="add_new_content_on_one_purchase" ref={ref}>
@@ -126,10 +119,10 @@ useEffect(() => {
             <TextField
               className="inputHowMuch"
               variant="outlined"
-              value={changeHowMany}
+              value={changeHowMuch}
               type="number"
               label="Сколько было потрачено:"
-              onChange={(event) => setChangeHowMany(event.target.value)}
+              onChange={(event) => setChangeHowMuch(event.target.value)}
             />
           </div>
         )}
