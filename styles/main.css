@@ -77,9 +77,16 @@ input[type="number"]::-webkit-outer-spin-button {
   justify-content: center;
 }
 
+.text_note,
+.input_note {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
 .info_about_task {
   height: 100%;
-  width: 50%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   justify-content: center;

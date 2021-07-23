@@ -15,7 +15,7 @@ const useKeyPress = (...valueKey) => {
   };
 
   useEffect( () => {
-    const result = keyPressed.every(elem => keys.includes(elem));
+    const result = keyPressed.every(elem => keys ? keys.includes(elem) : '');
     setKeyPress(result);
   }, [keyPressed, keys]);
 
@@ -28,8 +28,6 @@ const useKeyPress = (...valueKey) => {
     // setKeys([]);
     setKeyPress(false);
   };
-
-  console.log('keys', keys);
 
   useEffect(() => {
     window.addEventListener("keydown", onKeyDown);
