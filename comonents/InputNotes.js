@@ -1,7 +1,7 @@
 import React, {useState, useContext} from "react";
 import { CostContext } from "../context/Context";
 import { useMutation } from "@apollo/client";
-import { UPDATE_USER } from "../query /user";
+import { UPDATE_USER } from "../query/user";
 import { IconButton } from "@material-ui/core";
 import { TextField } from "@material-ui/core";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
@@ -42,8 +42,6 @@ const InputNotes = ({oneCost, setEditIndex}) => {
       alert("Не заполнены все поля");
     }
   };
-
-  console.log('oneCost', oneCost);
 
   const backHandler = () => {
     setEditIndex(-1);

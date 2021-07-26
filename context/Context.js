@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useMemo } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_USERS } from "../query /user";
+import { GET_ALL_USERS } from "../query/user";
 
 const CostContext = createContext();
 

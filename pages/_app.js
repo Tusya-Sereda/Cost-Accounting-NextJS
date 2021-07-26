@@ -1,13 +1,13 @@
-import '../styles/globals.css'
-import '../styles/main.css';
-import '../styles/onePurchase.css';
-import {CostProvider} from '../context/Context';
-import {ApolloProvider, ApolloClient, InMemoryCache} from '@apollo/client';
+import "../styles/globals.scss";
+import "../styles/main.scss";
+import "../styles/onePurchase.scss";
+import { CostProvider } from "../context/Context";
+import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 
-const client = new ApolloClient( {
-  uri: 'http://localhost:5000/graphql',
-  cache: new InMemoryCache()
-})
+const client = new ApolloClient({
+  uri: "http://localhost:5000/graphql",
+  cache: new InMemoryCache(),
+});
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -19,4 +19,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp
+export default MyApp;

@@ -1,36 +1,37 @@
-import React, {useContext} from "react";
+import React, { useState, useContext } from "react";
 import Link from "next/link";
-import { useMutation } from "@apollo/client";
-import { DELETE_USER } from "../query /user";
 import { CostContext } from "../context/Context";
+import ModalDelete from "./ModalDelete";
 import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
-const TextNotes = ({oneCost, index, setEditIndex}) => {
-  const [deleteUser] = useMutation(DELETE_USER);
+const TextNotes = ({ oneCost, index, setEditIndex }) => {
   const { setAllCost } = useContext(CostContext);
+  const [stateModal, setStateModalDelete] = useState(false);
 
-  const deleteHandler = (currentId) => {
-    try {
-      deleteUser({
-        variables: {
-          id: currentId,
-        },
-      }).then(() => {
-        setAllCost((prev) => prev.filter(({ id }) => id !== currentId));
-      });
-    } catch (error) {
-      alert(error);
-    }
-  };
-  
   const editHandler = (index) => {
     setEditIndex(index);
   };
 
+  const openModalDelete = () => {
+    setStateModalDelete(true);
+  };
+
+  const closeModalDelete = () => {
+    setStateModalDelete(false);
+  };
+
   return (
     <div className="text_note">
+      {stateModal && (
+        <ModalDelete
+          open={stateModal}
+          handleClose={closeModalDelete}
+          setAllCost={setAllCost}
+          oneCostId={oneCost.id}
+        />
+      )}
       <Link href={`/node/${oneCost.id}`}>
         <div className="info_about_task">
           <div className="cost_value">
@@ -45,7 +46,7 @@ const TextNotes = ({oneCost, index, setEditIndex}) => {
         <IconButton
           aria-label="delete"
           className="button_delete"
-          onClick={() => deleteHandler(oneCost.id)}
+          onClick={openModalDelete}
         >
           <DeleteIcon fontSize="large" className="deleteButton" />
         </IconButton>
