@@ -7,6 +7,7 @@ import useOutsideClick from "../hooks/useOutsideClick";
 import { IconButton, TextField } from "@material-ui/core";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import style from "../styles/onePurchase.module.scss";
 
 const EditById = ({ setEditIndex, onePurchase }) => {
   const { setAllCost } = useContext(CostContext);
@@ -22,9 +23,6 @@ const EditById = ({ setEditIndex, onePurchase }) => {
   };
 
   const checkHandler = () => {
-    // e.preventDefault();
-    // e.stopPropagation();
-    console.log("---------edit");
     if (changeWhere && changeHowMuch) {
       try {
         updateUser({
@@ -55,10 +53,10 @@ const EditById = ({ setEditIndex, onePurchase }) => {
   };
 
   return (
-    <div ref={ref}>
-      <div className="add_new_content_on_one_purchase" >
+    <div className={style.edit_by_id} ref={ref}>
+      <div className={style.add_new_content_on_one_purchase}>
         <TextField
-          className="inputWhere"
+          className={style.changeWhere}
           variant="outlined"
           value={changeWhere}
           type="text"
@@ -66,7 +64,7 @@ const EditById = ({ setEditIndex, onePurchase }) => {
           label="Куда было потрачено:"
         />
         <TextField
-          className="inputHowMuch"
+          className={style.changeHowMuch}
           variant="outlined"
           value={changeHowMuch}
           type="number"
@@ -74,19 +72,16 @@ const EditById = ({ setEditIndex, onePurchase }) => {
           onChange={(event) => setChangeHowMuch(event.target.value)}
         />
       </div>
-      <div>
-        <IconButton
-          className="button_oncheck"
-          onClick={checkHandler}
-        >
-          <CheckCircleIcon fontSize="large" className="checkButton"   />
+      <div className={style.buttons}>
+        <IconButton className={style.button_oncheck} onClick={checkHandler}>
+          <CheckCircleIcon fontSize="large" className={style.checkButton} />
         </IconButton>
         <IconButton
           aria-label="back"
-          className="button_back"
+          className={style.button_back}
           onClick={backHandler}
         >
-          <ArrowBackIcon fontSize="large" className="backButton" />
+          <ArrowBackIcon fontSize="large" className={style.backButton} />
         </IconButton>
       </div>
     </div>

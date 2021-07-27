@@ -55,6 +55,7 @@ export default function ModalDelete({
             onClick={() => deleteHandler(oneCostId)}
             color="primary"
             autoFocus
+            data-testid='button_agree'
           >
             Agree
           </Button>

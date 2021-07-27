@@ -1,34 +1,18 @@
 import React, { useState, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useMutation } from "@apollo/client";
 import { CostContext } from "../context/Context";
-import { DELETE_USER } from "../query/user";
 import { IconButton } from "@material-ui/core";
 import ModalDelete from "./ModalDelete";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import style from "../styles/onePurchase.module.scss";
 
 const InfoById = ({ setEditIndex, onePurchase }) => {
   const { setAllCost } = useContext(CostContext);
-  // const [deleteUser] = useMutation(DELETE_USER);
   const [stateModal, setStateModalDelete] = useState(false);
   const router = useRouter();
   const { id } = router.query;
-
-  // const deleteHandler = (currentId) => {
-  //   try {
-  //     deleteUser({
-  //       variables: {
-  //         id: currentId,
-  //       },
-  //     }).then(() => {
-  //       setAllCost((prev) => prev.filter(({ id }) => id !== currentId));
-  //     });
-  //   } catch (error) {
-  //     alert(error);
-  //   }
-  // };
 
   const openModalDelete = () => {
     setStateModalDelete(true);
@@ -42,6 +26,10 @@ const InfoById = ({ setEditIndex, onePurchase }) => {
     setEditIndex(id);
   };
 
+  const returnHome = () => {
+    router.push("/home");
+  };
+
   return (
     <>
       {stateModal && (
@@ -53,27 +41,33 @@ const InfoById = ({ setEditIndex, onePurchase }) => {
         />
       )}
       <div
-        className="text_purchase"
+        className={style.text_purchase}
         onClick={() => setEditIndex(onePurchase?.id)}
       >
+        <div className={style.link}>
+          <span className={style.link_on_home} onClick={returnHome}>
+            {" "}
+            На главную{" "}
+          </span>
+        </div>
         <p> At ID number: {id} </p>
-        <h1 className="title_where">{onePurchase?.place}</h1>
-        <p className="title_how_many">{onePurchase?.cost}</p>
+        <h1 className={style.title_where}>{onePurchase?.place}</h1>
+        <p className={style.title_how_many}>{onePurchase?.cost}</p>
       </div>
-      <div className="button_one_purchase">
+      <div className={style.button_one_purchase}>
         <IconButton
           aria-label="delete"
-          className="button_delete_one"
+          className={style.button_delete_one}
           onClick={() => openModalDelete()}
         >
-          <DeleteIcon fontSize="large" className="deleteOnePurchase" />
+          <DeleteIcon fontSize="large" className={style.deleteOnePurchase} />
         </IconButton>
         <IconButton
           aria-label="edit"
-          className="button_edit_one"
+          className={style.button_edit_one}
           onClick={() => editOnePurchase()}
         >
-          <EditIcon fontSize="large" className="editOnePurchase" />
+          <EditIcon fontSize="large" className={style.editOnePurchase} />
         </IconButton>
       </div>
     </>

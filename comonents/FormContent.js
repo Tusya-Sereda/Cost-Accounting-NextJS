@@ -3,6 +3,7 @@ import { CostContext } from "../context/Context";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "../query/user";
 import { TextField, Button } from "@material-ui/core";
+import style from "../styles/ContentPart.module.scss";
 
 const FormContent = () => {
   const { setAllCost, loading } = useContext(CostContext);
@@ -30,31 +31,37 @@ const FormContent = () => {
   }
 
   return (
-    <div className="add_content">
-      <TextField
-        className="inputWhere"
-        variant="outlined"
-        value={valuePlace}
-        type="text"
-        onChange={(event) => setPlace(event.target.value)}
-        label="Куда было потрачено:"
-      />
-      <TextField
-        className="inputHowMuch"
-        variant="outlined"
-        value={valueCost}
-        type="number"
-        label="Сколько было потрачено:"
-        onChange={(event) => setCost(event.target.value)}
-      />
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => onCLickButton()}
-      >
-        Add
-      </Button>
-    </div>
+    <>
+      <div className={style.add_content} key="21345">
+        <TextField
+          className={style.inputWhere}
+          variant="outlined"
+          value={valuePlace}
+          type="text"
+          onChange={(event) => setPlace(event.target.value)}
+          label="Куда было потрачено:"
+          data-testid="inputWhere"
+        />
+        <TextField
+          className={style.inputHowMuch}
+          variant="outlined"
+          value={valueCost}
+          type="number"
+          label="Сколько было потрачено:"
+          onChange={(event) => setCost(event.target.value)}
+          data-testid="inputHowMuch"
+        />
+        <Button
+          className={style.buttonAdd}
+          variant="contained"
+          color="secondary"
+          onClick={() => onCLickButton()}
+          data-testid="buttonAdd"
+        >
+          Add
+        </Button>
+      </div>
+    </>
   );
 };
 

@@ -6,6 +6,7 @@ import { IconButton } from "@material-ui/core";
 import { TextField } from "@material-ui/core";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import style from '../styles/ContentPart.module.scss';
 
 const InputNotes = ({oneCost, setEditIndex}) => {
   const { setAllCost, sum } = useContext(CostContext);
@@ -50,39 +51,42 @@ const InputNotes = ({oneCost, setEditIndex}) => {
   };
 
   return (
-    <div className="input_note">
-      <div className="input_info_task">
+    <div className={style.input_note}>
+      <div className={style.input_info_task}>
         <TextField
-          className="input_reason"
+          className={style.input_reason}
           variant="outlined"
           value={valueWhere}
           type="text"
           label="Куда было потрачено:"
           onChange={(event) => setValueWhere(event.target.value)}
+          data-testid='changeWhere'
         />
         <TextField
-          className="input_how_much"
+          className={style.input_how_much}
           variant="outlined"
           value={valueHowMuch}
           type="number"
           label="Сколько было потрачено:"
           onChange={(event) => setValueHowMuch(event.target.value)}
+          data-testid='changeHowMuch'
         />
       </div>
-      <div className="button">
+      <div className={style.button}>
         <IconButton
           aria-label="delete"
-          className="button_oncheck"
+          className={style.button_oncheck}
           onClick={() => checkHandler(oneCost.id)}
+          data-testid='checkButton'
         >
-          <CheckCircleIcon fontSize="large" className="checkButton" />
+          <CheckCircleIcon fontSize="large" className={style.checkButton} />
         </IconButton>
         <IconButton
           aria-label="edit"
-          className="button_back"
+          className={style.button_back}
           onClick={() => backHandler()}
         >
-          <ArrowBackIcon fontSize="large" className="backButton" />
+          <ArrowBackIcon fontSize="large" className={style.backButton} />
         </IconButton>
       </div>
     </div>

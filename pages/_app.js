@@ -1,6 +1,5 @@
 import "../styles/globals.scss";
 import "../styles/main.scss";
-import "../styles/onePurchase.scss";
 import { CostProvider } from "../context/Context";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 
