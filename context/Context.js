@@ -9,7 +9,7 @@ const CostProvider = ({ children }) => {
   const { loading, error, data } = useQuery(GET_ALL_USERS);
   // const [sum, setSum] = useState(0);
   const sum = useMemo(() => {
-    if (allCosts && allCosts.length > 0) {
+    if (allCosts.length) {
       return allCosts.reduce((acc, value) => {
         return acc += value.cost;
       }, 0);

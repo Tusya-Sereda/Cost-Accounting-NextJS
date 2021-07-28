@@ -1,13 +1,15 @@
 import React, { useState, useContext } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { CostContext } from "../context/Context";
 import ModalDelete from "./ModalDelete";
 import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import style from '../styles/ContentPart.module.scss';
+import styles from "../styles/TextNotes.module.scss";
 
 const TextNotes = ({ oneCost, index, setEditIndex }) => {
+  const router = useRouter();
   const { setAllCost } = useContext(CostContext);
   const [stateModal, setStateModalDelete] = useState(false);
 
@@ -23,8 +25,12 @@ const TextNotes = ({ oneCost, index, setEditIndex }) => {
     setStateModalDelete(false);
   };
 
+  const goToCostById = () => {
+    router.push(`/node/${oneCost.id}`)
+  }
+
   return (
-    <div className={style.text_note}>
+    <div className={styles.text_note} data-testid='text_note'>
       {stateModal && (
         <ModalDelete
           open={stateModal}
@@ -33,32 +39,32 @@ const TextNotes = ({ oneCost, index, setEditIndex }) => {
           oneCostId={oneCost.id}
         />
       )}
-      <Link href={`/node/${oneCost.id}`}>
-        <div className={style.info_about_task}>
-          <div className={style.cost_value}>
+      {/* <Link href={`/node/${oneCost.id}`}> */}
+        <div className={styles.info_about_task} data-testid='info_about_task' onClick={goToCostById}>
+          <div className={styles.cost_value}>
             <span> {oneCost.place} </span>
           </div>
-          <div className={style.cost_value}>
+          <div className={styles.cost_value}>
             <span>{oneCost.cost}</span>
           </div>
         </div>
-      </Link>
-      <div className={style.button}>
+      {/* </Link> */}
+      <div className={styles.buttons} data-testid='buttons'>
         <IconButton
           aria-label="delete"
-          className={style.button_delete}
+          id={styles.button_delete}
           onClick={openModalDelete}
-          data-testid='removeButton'
+          data-testid="removeButton"
         >
-          <DeleteIcon fontSize="large" id={style.deleteButton}/>
+          <DeleteIcon fontSize="large" />
         </IconButton>
         <IconButton
           aria-label="edit"
-          className={style.button_edit}
+          id={styles.button_edit}
           onClick={() => editHandler(index)}
           data-testid="updateButton"
         >
-          <EditIcon fontSize="large" className={style.editButton} />
+          <EditIcon fontSize="large" />
         </IconButton>
       </div>
     </div>

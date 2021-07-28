@@ -19,6 +19,7 @@ h1 {
   width: 100%;
   font-family: "Poppins", sans-serif;
   font-size: 50px;
+  color: #ffffff;
 }
 
 #__next {
@@ -26,11 +27,12 @@ h1 {
   width: 100%;
 }
 
-.mainHomeContainer {
-  width: 90%;
-  height: 100%;
-  margin: 0 auto;
-  text-align: center;
+p {
+  margin: 0;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 // /*ADD-CONTENT*/
@@ -156,14 +158,6 @@ h1 {
 //   width: 100%;
 //   font-size: 20px;
 // }
-
-p {
-  margin: 0;
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 // .button {
 //   height: 100%;

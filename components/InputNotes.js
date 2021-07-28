@@ -6,7 +6,7 @@ import { IconButton } from "@material-ui/core";
 import { TextField } from "@material-ui/core";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import style from '../styles/ContentPart.module.scss';
+import style from '../styles/InputNotes.module.scss';
 
 const InputNotes = ({oneCost, setEditIndex}) => {
   const { setAllCost, sum } = useContext(CostContext);
@@ -74,7 +74,7 @@ const InputNotes = ({oneCost, setEditIndex}) => {
       </div>
       <div className={style.button}>
         <IconButton
-          aria-label="delete"
+          aria-label="check"
           className={style.button_oncheck}
           onClick={() => checkHandler(oneCost.id)}
           data-testid='checkButton'
@@ -82,9 +82,10 @@ const InputNotes = ({oneCost, setEditIndex}) => {
           <CheckCircleIcon fontSize="large" className={style.checkButton} />
         </IconButton>
         <IconButton
-          aria-label="edit"
+          aria-label="back"
           className={style.button_back}
           onClick={() => backHandler()}
+          data-testid='backButton'
         >
           <ArrowBackIcon fontSize="large" className={style.backButton} />
         </IconButton>

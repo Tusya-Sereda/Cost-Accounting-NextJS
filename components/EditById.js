@@ -62,6 +62,7 @@ const EditById = ({ setEditIndex, onePurchase }) => {
           type="text"
           onChange={(event) => setChangeWhere(event.target.value)}
           label="Куда было потрачено:"
+          data-testid='changeInfoWhere'
         />
         <TextField
           className={style.changeHowMuch}
@@ -70,10 +71,11 @@ const EditById = ({ setEditIndex, onePurchase }) => {
           type="number"
           label="Сколько было потрачено:"
           onChange={(event) => setChangeHowMuch(event.target.value)}
+          data-testid='changeInfoHowMuch'
         />
       </div>
       <div className={style.buttons}>
-        <IconButton className={style.button_oncheck} onClick={checkHandler}>
+        <IconButton className={style.button_oncheck} onClick={checkHandler} data-testid='checkInfoButton'>
           <CheckCircleIcon fontSize="large" className={style.checkButton} />
         </IconButton>
         <IconButton

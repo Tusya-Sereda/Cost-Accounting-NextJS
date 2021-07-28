@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import AddContent from '../comonents/AddContent';
-import style from '../styles/ContentPart.module.scss';
+import AddContent from '../components/AddContent';
+import style from '../styles/MainPage.module.scss';
  
 export default function Home() {
   return (

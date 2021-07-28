@@ -1,0 +1,31 @@
+.text_note {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.info_about_task {
+  height: 100%;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cost_value {
+  height: 50%;
+  margin: 0;
+  width: 100%;
+  font-size: 20px;
+}
+
+.buttons {
+  height: 100%;
+  width: 40%;
+}
+
+#button_delete,
+#button_edit {
+  height: 100%;
+  width: 50%;
+}

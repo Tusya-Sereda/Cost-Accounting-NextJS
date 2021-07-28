@@ -33,8 +33,23 @@ Cypress.Commands.add("getElement", (elementId, children) => {
   cy.get(`[data-testid=${elementId}]`);
 });
 
-Cypress.Commands.add("form", (inputWhere, inputHowMuch) => {
-  cy.getElement("inputWhere", "> div").type(inputWhere);
-  cy.getElement("inputHowMuch", "> div").type(inputHowMuch);
-  cy.getElement("buttonAdd").click();
-});
+// Cypress.Commands.add("form", (inputWhere, inputHowMuch) => {
+//   cy.getElement("inputWhere", "> div").type(inputWhere);
+//   cy.getElement("inputHowMuch", "> div").type(inputHowMuch);
+//   cy.getElement("buttonAdd").click();
+// });
+
+Cypress.Commands.add(
+  "form",
+  (idWhere, idHowMuch, idButton, inputWhere, inputHowMuch) => {
+    if (inputWhere.length && inputHowMuch !== 0) {
+      cy.getElement(`${idWhere}`, "> div").type(inputWhere);
+      cy.getElement(`${idHowMuch}`, "> div").type(inputHowMuch);
+      if (idButton.length) {
+        cy.getElement(idButton).click();
+      }
+    } else {
+      
+    }
+  }
+);

@@ -45,7 +45,7 @@ const InfoById = ({ setEditIndex, onePurchase }) => {
         onClick={() => setEditIndex(onePurchase?.id)}
       >
         <div className={style.link}>
-          <span className={style.link_on_home} onClick={returnHome}>
+          <span className={style.link_on_home} data-testid='linkOnHome' onClick={returnHome}>
             {" "}
             На главную{" "}
           </span>
@@ -59,6 +59,7 @@ const InfoById = ({ setEditIndex, onePurchase }) => {
           aria-label="delete"
           className={style.button_delete_one}
           onClick={() => openModalDelete()}
+          data-testid='deleteById'
         >
           <DeleteIcon fontSize="large" className={style.deleteOnePurchase} />
         </IconButton>
@@ -66,6 +67,7 @@ const InfoById = ({ setEditIndex, onePurchase }) => {
           aria-label="edit"
           className={style.button_edit_one}
           onClick={() => editOnePurchase()}
+          data-testid='edit_button'
         >
           <EditIcon fontSize="large" className={style.editOnePurchase} />
         </IconButton>

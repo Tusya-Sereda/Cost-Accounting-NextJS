@@ -34,7 +34,7 @@ export default function ModalDelete({
   };
 
   return (
-    <div>
+    <div data-testid='modal_window'>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -48,7 +48,7 @@ export default function ModalDelete({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="primary" data-testid='button_disagree'>
             Disagree
           </Button>
           <Button

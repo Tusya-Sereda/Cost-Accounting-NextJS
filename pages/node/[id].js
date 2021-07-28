@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "../../query/user";
-import InfoById from "../../comonents/InfoById";
-import EditById from "../../comonents/EditById";
+import InfoById from "../../components/InfoById";
+import EditById from "../../components/EditById";
 import { useRouter } from "next/router";
 import useKeyPress from "../../hooks/UseKeyPress";
 import useWindowSize from "../../hooks/useWindowSize";
-import CircularIndeterminate from "../../comonents/Spinner";
+import CircularIndeterminate from "../../components/Spinner";
 import style from "../../styles/onePurchase.module.scss";
 
 export default function NodeId() {
