@@ -5,6 +5,8 @@ import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "../query/user";
 import { TextField, Button } from "@material-ui/core";
 import style from "../styles/FormContent.module.scss";
+import SimpleSnackbar from "../components/Alert";
+import CircularIndeterminate from '../components/Spinner';
 
 const useStyles = makeStyles(() => ({
   noBorder: {
@@ -18,28 +20,33 @@ const FormContent = () => {
   const [createUser] = useMutation(CREATE_USER);
   const [valuePlace, setPlace] = useState("");
   const [valueCost, setCost] = useState("");
-console.log(valueCost);
+  const [showAlert, setShowAlert] = useState(false);
+
   const onClickButton = () => {
-    createUser({
-      variables: {
-        input: {
-          place: valuePlace,
-          cost: +valueCost,
+    if (valuePlace && +valueCost !== 0) {
+      createUser({
+        variables: {
+          input: {
+            place: valuePlace.trim(),
+            cost: +valueCost,
+          },
         },
-      },
-    }).then(({ data }) => {
-      setAllCost((prev) => [...prev, data.createUser]); //спредим нового (одного пользователя) и добавляем (перезаписываем) в массив
-    });
-    setPlace("");
-    setCost("");
+      }).then(({ data }) => {
+        setAllCost((prev) => [...prev, data.createUser]); //спредим нового (одного пользователя) и добавляем (перезаписываем) в массив
+      });
+      setPlace("");
+      setCost("");
+    } else {
+      setShowAlert(true);
+    }
   };
 
   if (loading) {
-    return <span>Loading....</span>;
+    return <CircularIndeterminate/>;
   }
 
   return (
-    <div className={style.add_content} data-testid='add_content'>
+    <div className={style.add_content} data-testid="add_content">
       <TextField
         id={style.inputWhere}
         variant="outlined"
@@ -49,10 +56,11 @@ console.log(valueCost);
         label="Куда было потрачено:"
         required
         autoFocus
+        autoComplete="off"
         data-testid="inputWhere"
-        classes={{notchedOutline:classes.input}}
+        classes={{ notchedOutline: classes.input }}
         InputProps={{
-          classes:{notchedOutline:classes.noBorder}
+          classes: { notchedOutline: classes.noBorder },
         }}
       />
       <TextField
@@ -64,9 +72,9 @@ console.log(valueCost);
         required
         onChange={(event) => setCost(event.target.value)}
         data-testid="inputHowMuch"
-        classes={{notchedOutline:classes.input}}
+        classes={{ notchedOutline: classes.input }}
         InputProps={{
-          classes:{notchedOutline:classes.noBorder}
+          classes: { notchedOutline: classes.noBorder },
         }}
       />
       <Button
@@ -78,6 +86,7 @@ console.log(valueCost);
       >
         Add
       </Button>
+      {showAlert && <SimpleSnackbar setShowAlert={setShowAlert} />}
     </div>
   );
 };

@@ -3,19 +3,20 @@ import { CostContext } from "../context/Context";
 import TextNotes from "./TextNotes";
 import InputNotes from "./InputNotes";
 import style from "../styles/TaskContent.module.scss";
+import CircularIndeterminate from "./Spinner";
 
 const TaskContent = () => {
   const { allCosts, sum, loading } = useContext(CostContext);
   const [editIndex, setEditIndex] = useState(-1);
 
   if (loading) {
-    return <span>Loading....</span>;
+    return <CircularIndeterminate />;
   }
 
   return (
     <div className={style.task_content} data-testid="task_content">
       <div className={style.resultSum}>
-        <span>{`Итого: ${sum}`}</span>
+        {allCosts.length > 0 && <span>{`Итого: ${sum}`}</span>}
       </div>
       {!!allCosts.length &&
         allCosts.map((value, index) => (
@@ -43,6 +44,6 @@ const TaskContent = () => {
         ))}
     </div>
   );
-}
+};
 
 export default TaskContent;

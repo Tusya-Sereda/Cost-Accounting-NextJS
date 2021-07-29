@@ -8,6 +8,7 @@ import { IconButton, TextField } from "@material-ui/core";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import style from "../styles/onePurchase.module.scss";
+import SimpleSnackbar from "./Alert";
 
 const EditById = ({ setEditIndex, onePurchase }) => {
   const { setAllCost } = useContext(CostContext);
@@ -15,15 +16,16 @@ const EditById = ({ setEditIndex, onePurchase }) => {
   const [changeHowMuch, setChangeHowMuch] = useState("");
   const ref = useRef();
   const [updateUser] = useMutation(UPDATE_USER);
+  const [showAlert, setShowAlert] = useState(false);
 
-  useOutsideClick(ref, () => setEditIndex(-1));
+  useOutsideClick(ref, () => setEditIndex(true));
 
   const backHandler = () => {
-    setEditIndex(-1);
+    setEditIndex(false);
   };
 
   const checkHandler = () => {
-    if (changeWhere && changeHowMuch) {
+    if (changeWhere && changeHowMuch !== 0) {
       try {
         updateUser({
           variables: {
@@ -44,17 +46,20 @@ const EditById = ({ setEditIndex, onePurchase }) => {
       } catch (error) {
         alert(error);
       }
-      setEditIndex(-1);
+      setEditIndex(false);
       setChangeWhere("");
       setChangeHowMuch("");
     } else {
-      alert("Не заполнены все поля");
+      setShowAlert(true);
     }
   };
 
   return (
     <div className={style.edit_by_id} ref={ref}>
-      <div className={style.add_new_content_on_one_purchase}>
+      <div
+        className={style.add_new_content_on_one_purchase}
+        data-testid="add_new_content_on_one_purchase"
+      >
         <TextField
           className={style.changeWhere}
           variant="outlined"
@@ -62,7 +67,7 @@ const EditById = ({ setEditIndex, onePurchase }) => {
           type="text"
           onChange={(event) => setChangeWhere(event.target.value)}
           label="Куда было потрачено:"
-          data-testid='changeInfoWhere'
+          data-testid="changeInfoWhere"
         />
         <TextField
           className={style.changeHowMuch}
@@ -71,11 +76,15 @@ const EditById = ({ setEditIndex, onePurchase }) => {
           type="number"
           label="Сколько было потрачено:"
           onChange={(event) => setChangeHowMuch(event.target.value)}
-          data-testid='changeInfoHowMuch'
+          data-testid="changeInfoHowMuch"
         />
       </div>
       <div className={style.buttons}>
-        <IconButton className={style.button_oncheck} onClick={checkHandler} data-testid='checkInfoButton'>
+        <IconButton
+          className={style.button_oncheck}
+          onClick={checkHandler}
+          data-testid="checkInfoButton"
+        >
           <CheckCircleIcon fontSize="large" className={style.checkButton} />
         </IconButton>
         <IconButton
@@ -86,6 +95,7 @@ const EditById = ({ setEditIndex, onePurchase }) => {
           <ArrowBackIcon fontSize="large" className={style.backButton} />
         </IconButton>
       </div>
+      {showAlert && <SimpleSnackbar setShowAlert={setShowAlert} />}
     </div>
   );
 };

@@ -26,11 +26,11 @@ const TextNotes = ({ oneCost, index, setEditIndex }) => {
   };
 
   const goToCostById = () => {
-    router.push(`/node/${oneCost.id}`)
-  }
+    router.push(`/node/${oneCost.id}`);
+  };
 
   return (
-    <div className={styles.text_note} data-testid='text_note'>
+    <div className={styles.text_note} data-testid="text_note">
       {stateModal && (
         <ModalDelete
           open={stateModal}
@@ -39,17 +39,19 @@ const TextNotes = ({ oneCost, index, setEditIndex }) => {
           oneCostId={oneCost.id}
         />
       )}
-      {/* <Link href={`/node/${oneCost.id}`}> */}
-        <div className={styles.info_about_task} data-testid='info_about_task' onClick={goToCostById}>
-          <div className={styles.cost_value}>
-            <span> {oneCost.place} </span>
-          </div>
-          <div className={styles.cost_value}>
-            <span>{oneCost.cost}</span>
-          </div>
+      <div
+        className={styles.info_about_task}
+        data-testid="info_about_task"
+        onClick={goToCostById}
+      >
+        <div className={styles.cost_value}>
+          <span data-testid="valueCostPlace"> {oneCost.place} </span>
         </div>
-      {/* </Link> */}
-      <div className={styles.buttons} data-testid='buttons'>
+        <div className={styles.cost_value}>
+          <span>{oneCost.cost}</span>
+        </div>
+      </div>
+      <div className={styles.buttons} data-testid="buttons">
         <IconButton
           aria-label="delete"
           id={styles.button_delete}

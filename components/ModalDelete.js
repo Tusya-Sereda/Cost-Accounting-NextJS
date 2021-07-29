@@ -30,16 +30,17 @@ export default function ModalDelete({
     } catch (error) {
       alert(error);
     }
-    router.push('/home');
+    router.push("/home");
   };
 
   return (
-    <div data-testid='modal_window'>
+    <div>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        data-testid="modal_window"
       >
         <DialogTitle id="alert-dialog-title">{"Delete a store"}</DialogTitle>
         <DialogContent>
@@ -48,14 +49,18 @@ export default function ModalDelete({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" data-testid='button_disagree'>
+          <Button
+            onClick={handleClose}
+            color="primary"
+            data-testid="button_disagree"
+          >
             Disagree
           </Button>
           <Button
             onClick={() => deleteHandler(oneCostId)}
             color="primary"
             autoFocus
-            data-testid='button_agree'
+            data-testid="button_agree"
           >
             Agree
           </Button>

@@ -5,17 +5,15 @@ const useKeyPress = (...valueKey) => {
 
   const [keyPress, setKeyPress] = useState(false);
   const [keys, setKeys] = useState([]);
- 
+
   const onKeyDown = ({ key }) => {
-    setKeys( array => [...new Set([...array, key])]);
-    // const newArr = [...array, key]
-    // const sets = new Set(newArr)
-    // const uniqArr = [...sets]
-    // return uniqArr;
+    setKeys((array) => [...new Set([...array, key])]);
   };
 
-  useEffect( () => {
-    const result = keyPressed.every(elem => keys ? keys.includes(elem) : '');
+  useEffect(() => {
+    const result = keyPressed.every((elem) =>
+      keys ? keys.includes(elem) : ""
+    );
     setKeyPress(result);
   }, [keyPressed, keys]);
 
@@ -25,16 +23,15 @@ const useKeyPress = (...valueKey) => {
       prevKeys.splice(count, 1);
       return prevKeys;
     });
-    // setKeys([]);
     setKeyPress(false);
   };
 
   useEffect(() => {
-    window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("keyup", onKeyUp);
+    document.body.addEventListener("keydown", onKeyDown);
+    document.body.addEventListener("keyup", onKeyUp);
     return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      window.removeEventListener("keyup", onKeyUp);
+      document.body.removeEventListener("keydown", onKeyDown);
+      document.body.removeEventListener("keyup", onKeyUp);
     };
   }, []);
 

@@ -23,7 +23,7 @@ const InfoById = ({ setEditIndex, onePurchase }) => {
   };
 
   const editOnePurchase = () => {
-    setEditIndex(id);
+    setEditIndex(true);
   };
 
   const returnHome = () => {
@@ -42,32 +42,38 @@ const InfoById = ({ setEditIndex, onePurchase }) => {
       )}
       <div
         className={style.text_purchase}
-        onClick={() => setEditIndex(onePurchase?.id)}
+        data-testid="text_purchase"
+        onClick={() => setEditIndex(true)}
       >
         <div className={style.link}>
-          <span className={style.link_on_home} data-testid='linkOnHome' onClick={returnHome}>
-            {" "}
-            На главную{" "}
+          <span
+            className={style.link_on_home}
+            data-testid="linkOnHome"
+            onClick={returnHome}
+          >
+            На главную
           </span>
         </div>
         <p> At ID number: {id} </p>
-        <h1 className={style.title_where}>{onePurchase?.place}</h1>
-        <p className={style.title_how_many}>{onePurchase?.cost}</p>
+        <h3 className={style.title_where} data-testid="title_where">
+          {onePurchase?.place}
+        </h3>
+        <h3 className={style.title_how_many}>{onePurchase?.cost}</h3>
       </div>
       <div className={style.button_one_purchase}>
         <IconButton
           aria-label="delete"
           className={style.button_delete_one}
-          onClick={() => openModalDelete()}
-          data-testid='deleteById'
+          onClick={openModalDelete}
+          data-testid="deleteById"
         >
           <DeleteIcon fontSize="large" className={style.deleteOnePurchase} />
         </IconButton>
         <IconButton
           aria-label="edit"
           className={style.button_edit_one}
-          onClick={() => editOnePurchase()}
-          data-testid='edit_button'
+          onClick={editOnePurchase}
+          data-testid="edit_button"
         >
           <EditIcon fontSize="large" className={style.editOnePurchase} />
         </IconButton>

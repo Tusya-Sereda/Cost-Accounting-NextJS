@@ -7,15 +7,17 @@ import { TextField } from "@material-ui/core";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import style from '../styles/InputNotes.module.scss';
+import SimpleSnackbar from '../components/Alert';
 
 const InputNotes = ({oneCost, setEditIndex}) => {
   const { setAllCost, sum } = useContext(CostContext);
   const [valueWhere, setValueWhere] = useState('');
   const [valueHowMuch, setValueHowMuch] = useState('');
   const [updateUser] = useMutation(UPDATE_USER);
+  const [showAlert, setShowAlert] = useState(false);
 
   const checkHandler = (currentId) => {
-    if (valueWhere && valueHowMuch) {
+    if (valueWhere && +valueHowMuch !== 0) {
       try {
         updateUser({
           variables: {
@@ -36,11 +38,11 @@ const InputNotes = ({oneCost, setEditIndex}) => {
       } catch (error) {
         alert(error);
       }
-      setEditIndex(-1);
+      setEditIndex(false);
       setValueWhere('');
       setValueHowMuch('');
     } else {
-      alert("Не заполнены все поля");
+      setShowAlert(true);
     }
   };
 
@@ -51,8 +53,8 @@ const InputNotes = ({oneCost, setEditIndex}) => {
   };
 
   return (
-    <div className={style.input_note}>
-      <div className={style.input_info_task}>
+    <div className={style.input_note} data-testid='input_note'>
+      <div className={style.input_info_task} data-testid='input_info_task'>
         <TextField
           className={style.input_reason}
           variant="outlined"
@@ -72,7 +74,7 @@ const InputNotes = ({oneCost, setEditIndex}) => {
           data-testid='changeHowMuch'
         />
       </div>
-      <div className={style.button}>
+      <div className={style.buttons}>
         <IconButton
           aria-label="check"
           className={style.button_oncheck}
@@ -90,6 +92,7 @@ const InputNotes = ({oneCost, setEditIndex}) => {
           <ArrowBackIcon fontSize="large" className={style.backButton} />
         </IconButton>
       </div>
+      {showAlert && <SimpleSnackbar setShowAlert={setShowAlert}/>}
     </div>
   );
 };

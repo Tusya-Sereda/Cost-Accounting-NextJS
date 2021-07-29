@@ -13,8 +13,8 @@ export default function NodeId() {
   const router = useRouter();
   const { id } = router.query;
   const [onePurchase, setOnePurchase] = useState();
-  const [editIndex, setEditIndex] = useState(-1);
-  const someText = useKeyPress("s", "a");
+  const [editIndex, setEditIndex] = useState(false);
+  const someText = useKeyPress("Control", "a");
 
   const { loading, error, data, refetch } = useQuery(GET_USER, {
     variables: { id: +id },
@@ -29,7 +29,7 @@ export default function NodeId() {
 
   useEffect(() => {
     getArray();
-  }, [id, data]);
+  }, [data]);
 
   useEffect(() => {
     if (id) {
@@ -44,13 +44,13 @@ export default function NodeId() {
   }, [someText]);
 
   if (loading) {
-    <CircularIndeterminate />;
+    return <CircularIndeterminate />;
   }
+
   return (
-    <div className={style.info_about_one_cost}>
-      {/* {sizeWindow.width}px / {sizeWindow.height}px */}
-      <div className={style.content_purchase}>
-        {editIndex === -1 ? (
+    <div className={style.info_about_one_cost} data-tesid="info_about_one_cost">
+      <div className={style.content_purchase} data-testid="content_purchase">
+        {!editIndex ? (
           <InfoById setEditIndex={setEditIndex} onePurchase={onePurchase} />
         ) : (
           <EditById setEditIndex={setEditIndex} onePurchase={onePurchase} />

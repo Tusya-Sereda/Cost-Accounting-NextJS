@@ -49,7 +49,6 @@ Cypress.Commands.add(
         cy.getElement(idButton).click();
       }
     } else {
-      
     }
   }
 );
