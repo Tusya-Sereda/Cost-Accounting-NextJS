@@ -9,7 +9,8 @@
     "lint": "next lint",
     "mock": "json-server -w db.json -p 4200 -d 450",
     "serve": "concurrently \"npm run dev\"  \" npm run cypress:open\"",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "test": "jest"
   },
   "dependencies": {
     "@apollo/client": "^3.3.21",
@@ -30,7 +31,8 @@
     "cypress": "^8.0.0",
     "eslint": "7.30.0",
     "eslint-config-next": "11.0.1",
-    "eslint-plugin-cypress": "^2.11.3"
+    "eslint-plugin-cypress": "^2.11.3",
+    "jest": "^27.0.6"
   },
   "description": "New project on NextJS",
   "main": "next.config.js",

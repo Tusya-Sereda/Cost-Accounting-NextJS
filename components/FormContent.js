@@ -6,7 +6,9 @@ import { CREATE_USER } from "../query/user";
 import { TextField, Button } from "@material-ui/core";
 import style from "../styles/FormContent.module.scss";
 import SimpleSnackbar from "../components/Alert";
-import CircularIndeterminate from '../components/Spinner';
+import CircularIndeterminate from "../components/Spinner";
+import { validationHowMuch } from "../utilitis/manyUseFunc";
+import { validationWhere } from "../utilitis/manyUseFunc";
 
 const useStyles = makeStyles(() => ({
   noBorder: {
@@ -23,7 +25,8 @@ const FormContent = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   const onClickButton = () => {
-    if (valuePlace && +valueCost !== 0) {
+    if (validationWhere(valuePlace) && validationHowMuch(valueCost)) {
+      // if (valuePlace.match(validateWhere) && +valueCost.match(validateHowMuch)) {
       createUser({
         variables: {
           input: {
@@ -42,7 +45,7 @@ const FormContent = () => {
   };
 
   if (loading) {
-    return <CircularIndeterminate/>;
+    return <CircularIndeterminate />;
   }
 
   return (

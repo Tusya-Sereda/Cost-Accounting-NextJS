@@ -9,6 +9,8 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import style from "../styles/onePurchase.module.scss";
 import SimpleSnackbar from "./Alert";
+import { validationHowMuch } from "../utilitis/manyUseFunc";
+import { validationWhere } from "../utilitis/manyUseFunc";
 
 const EditById = ({ setEditIndex, onePurchase }) => {
   const { setAllCost } = useContext(CostContext);
@@ -25,7 +27,7 @@ const EditById = ({ setEditIndex, onePurchase }) => {
   };
 
   const checkHandler = () => {
-    if (changeWhere && changeHowMuch !== 0) {
+    if (validationWhere(changeWhere) && validationHowMuch(changeHowMuch)) {
       try {
         updateUser({
           variables: {

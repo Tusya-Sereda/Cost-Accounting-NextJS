@@ -8,6 +8,8 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import style from '../styles/InputNotes.module.scss';
 import SimpleSnackbar from '../components/Alert';
+import { validationHowMuch } from '../utilitis/manyUseFunc';
+import { validationWhere } from '../utilitis/manyUseFunc';
 
 const InputNotes = ({oneCost, setEditIndex}) => {
   const { setAllCost, sum } = useContext(CostContext);
@@ -17,7 +19,7 @@ const InputNotes = ({oneCost, setEditIndex}) => {
   const [showAlert, setShowAlert] = useState(false);
 
   const checkHandler = (currentId) => {
-    if (valueWhere && +valueHowMuch !== 0) {
+    if (validationWhere(valueWhere) && validationHowMuch(valueHowMuch)) {
       try {
         updateUser({
           variables: {
